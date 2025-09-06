@@ -696,12 +696,13 @@ def blackjack_history_menu(index: int, total: int) -> InlineKeyboardMarkup:
 
 
 def feedback_menu(prefix: str) -> InlineKeyboardMarkup:
-    """Return 1-5 star rating buttons using only emojis."""
-    buttons = [
-        InlineKeyboardButton("⭐" * i, callback_data=f"{prefix}_{i}")
-        for i in range(1, 6)
-    ]
-    return InlineKeyboardMarkup(inline_keyboard=[buttons])
+    """Return 1-5 star rating buttons arranged vertically."""
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton("⭐" * i, callback_data=f"{prefix}_{i}")]
+            for i in range(1, 6)
+        ]
+    )
 
 
 def feedback_reason_menu(prefix: str, lang: str) -> InlineKeyboardMarkup:

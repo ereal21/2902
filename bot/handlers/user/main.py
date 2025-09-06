@@ -83,9 +83,9 @@ async def request_feedback(bot, user_id: int, lang: str, item_name: str) -> None
 
 
 async def schedule_feedback(bot, user_id: int, lang: str, item_name: str) -> None:
-    """Send feedback request after a 30-minute delay."""
+    """Send feedback request after a 1-hour delay."""
     try:
-        await asyncio.sleep(1)  # 30 minutes
+        await asyncio.sleep(3600)  # 1 hour
         await request_feedback(bot, user_id, lang, item_name)
     except Exception as e:
         logger.error(f"Feedback request failed for {user_id}: {e}")
@@ -1246,9 +1246,6 @@ async def buy_item_callback_handler(call: CallbackQuery):
             TgConfig.STATE.pop(f'{user_id}_pending_item', None)
             TgConfig.STATE.pop(f'{user_id}_price', None)
             TgConfig.STATE.pop(f'{user_id}_promo_applied', None)
-            recipient = gift_to or user_id
-            recipient_lang = get_user_language(recipient) or lang
-            asyncio.create_task(schedule_feedback(bot, recipient, recipient_lang, value_data['item_name']))
             return
 
             if not gift_to:
